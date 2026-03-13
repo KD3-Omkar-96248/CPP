@@ -1,66 +1,145 @@
 #include<iostream>
 using namespace std;
 
-class Cylinder
+class Time
 {
-private:
-    double radius;
-    double height;
-    static double PI;
+    int hour;
+    int minute;
+    int second;
 
 public:
 
-    
-    Cylinder() : radius(0), height(0)
+    Time()
     {
+        hour = 0;
+        minute = 0;
+        second = 0;
     }
 
-    
-    Cylinder(double radius, double height) : radius(radius), height(height)
+    Time(int h,int m,int s)
     {
+        hour = h;
+        minute = m;
+        second = s;
     }
 
-    
-    double getRadius()
+    int getHour()
     {
-        return radius;
+        return hour;
     }
 
-    
-    void setRadius(double radius)
+    int getMinute()
     {
-        this->radius = radius;
+        return minute;
     }
 
-
-    double getHeight()
+    int getSecond()
     {
-        return height;
+        return second;
     }
 
-
-    void setHeight(double height)
+    void setHour(int h)
     {
-        this->height = height;
+        hour = h;
     }
 
-    
-    double calculateVolume()
+    void setMinute(int m)
     {
-        return PI * radius * radius * height;
+        minute = m;
+    }
+
+    void setSecond(int s)
+    {
+        second = s;
+    }
+
+    void printTime()
+    {
+        cout<<hour<<" : "<<minute<<" : "<<second<<endl;
     }
 };
 
-double Cylinder::PI = 3.14;
-
 int main()
 {
-    Cylinder c1(3,7);
+    int n;
+    cout<<"Enter number of Time objects : ";
+    cin>>n;
 
-    cout<<"Radius : "<<c1.getRadius()<<endl;
-    cout<<"Height : "<<c1.getHeight()<<endl;
 
-    cout<<"Volume of Cylinder = "<<c1.calculateVolume()<<endl;
+    Time **arr = new Time*[n];
+
+    int choice;
+    int index = 0;
+
+    do
+    {
+        cout<<"\n1.Add Time";
+        cout<<"\n2.Display All Time";
+        cout<<"\n3.Display only hrs";
+        cout<<"\n4.Exit";
+        cout<<"\nEnter choice : ";
+        cin>>choice;
+
+        switch(choice)
+        {
+            case 1:
+            {
+                if(index < n)
+                {
+                    int h,m,s;
+
+                    cout<<"Enter hour minute second : ";
+                    cin>>h>>m>>s;
+
+                    arr[index] = new Time(h,m,s);
+
+                    index++;
+                }
+                else
+                {
+                    cout<<"Array Full\n";
+                }
+
+                break;
+            }
+
+            case 2:
+            {
+                for(int i=0;i<index;i++)
+                {
+                    arr[i]->printTime();
+                }
+
+                break;
+            }
+
+            case 3:
+            {
+                for(int i=0;i<index;i++)
+                {
+                    cout<<"Hour : "<<arr[i]->getHour()<<endl;
+                }
+
+                break;
+            }
+
+            case 4:
+                cout<<"Program End\n";
+                break;
+
+            default:
+                cout<<"Invalid Choice\n";
+        }
+
+    }while(choice!=4);
+
+    // Memory Deallocation
+    for(int i=0;i<n;i++)
+    {
+        delete arr[i];
+    }
+
+    delete[] arr;
 
     return 0;
 }
